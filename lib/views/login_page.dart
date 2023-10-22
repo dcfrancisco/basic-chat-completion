@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +11,7 @@ class LoginPage extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pushReplacementNamed('/chat');
           },
-          child: Text('Login'),
+          child: const Text('Login'),
         ),
       ),
     );

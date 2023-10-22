@@ -4,7 +4,7 @@ class ChatInput extends StatefulWidget {
   final Function(String) onSend;
   final FocusNode focusNode;
 
-  ChatInput({required this.onSend, required this.focusNode});
+  const ChatInput({super.key, required this.onSend, required this.focusNode});
 
   @override
   _ChatInputState createState() => _ChatInputState();
@@ -23,9 +23,9 @@ class _ChatInputState extends State<ChatInput> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
         decoration: BoxDecoration(
           color: Theme.of(context).brightness == Brightness.light
               ? Colors.grey[200] // Light theme
@@ -39,14 +39,14 @@ class _ChatInputState extends State<ChatInput> {
                 controller: _controller,
                 onSubmitted: (_) => _submit(),
                 focusNode: widget.focusNode,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Send a message...',
                 ),
               ),
             ),
             IconButton(
-              icon: Icon(Icons.send),
+              icon: const Icon(Icons.send),
               onPressed: _submit,
               color: Theme.of(context).brightness == Brightness.light
                   ? Colors.blue // Light theme

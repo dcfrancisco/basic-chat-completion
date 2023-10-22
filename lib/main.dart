@@ -13,9 +13,11 @@ final ThemeData _darkTheme = ThemeData(
   primarySwatch: Colors.blue,
 );
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,9 +26,9 @@ class MyApp extends StatelessWidget {
       theme: _lightTheme,
       darkTheme: _darkTheme,
       themeMode: ThemeMode.system,
-      home: LoginPage(),
+      home: const LoginPage(),
       routes: {
-        '/chat': (context) => ChatPage(),
+        '/chat': (context) => const ChatPage(),
       },
     );
   }

@@ -6,6 +6,8 @@ import 'package:mobile_ui/views/widgets/chat_input.dart';
 import 'sidebar.dart';
 
 class ChatPage extends StatefulWidget {
+  const ChatPage({super.key});
+
   @override
   _ChatPageState createState() => _ChatPageState();
 }
@@ -15,7 +17,7 @@ class _ChatPageState extends State<ChatPage> {
   final _chatService = ChatService();
   final _scrollController = ScrollController();
 
-  FocusNode _inputFocusNode = FocusNode();
+  final FocusNode _inputFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -27,17 +29,17 @@ class _ChatPageState extends State<ChatPage> {
     _messages.add(userMessage);
 
     setState(() {
-      Future.delayed(Duration(milliseconds: 100), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
       });
     });
 
-    final botResponse = await _chatService.getBotResponse(content);
+    final botResponse = await _chatService.getBotResponse(_messages, content);
     final botMessage = Message(sender: 'bot', content: botResponse);
     _messages.add(botMessage);
 
     setState(() {
-      Future.delayed(Duration(milliseconds: 100), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
       });
     });
@@ -53,8 +55,8 @@ class _ChatPageState extends State<ChatPage> {
       _inputFocusNode.requestFocus();
     });
     return Scaffold(
-      appBar: AppBar(title: Text('ChatBot')),
-      drawer: Sidebar(),
+      appBar: AppBar(title: const Text('ChatBot')),
+      drawer: const Sidebar(),
       body: Container(
         color: Colors.blueGrey[900],
         child: Column(
@@ -65,7 +67,7 @@ class _ChatPageState extends State<ChatPage> {
                 itemCount: _messages.length,
                 itemBuilder: (ctx, index) =>
                     MessageBubble(message: _messages[index]),
-                padding: EdgeInsets.only(top: 8.0, bottom: 60.0),
+                padding: const EdgeInsets.only(top: 8.0, bottom: 60.0),
               ),
             ),
             ChatInput(onSend: _sendMessage, focusNode: _inputFocusNode),
