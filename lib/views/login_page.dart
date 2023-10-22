@@ -3,7 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:mobile_ui/system_message_provider.dart';
 
 class LoginPage extends StatelessWidget {
+<<<<<<< HEAD
   const LoginPage({Key? key}) : super(key: key);
+=======
+  const LoginPage({super.key});
+>>>>>>> 91f88bf (Initial commit)
 
   @override
   Widget build(BuildContext context) {
