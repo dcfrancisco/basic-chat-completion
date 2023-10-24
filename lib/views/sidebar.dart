@@ -3,23 +3,15 @@ import 'package:provider/provider.dart';
 import 'package:mobile_ui/system_message_provider.dart';
 
 class Sidebar extends StatelessWidget {
-<<<<<<< HEAD
-  final TextEditingController _systemMessageController;
-  final Function(String) onSystemMessageUpdated;
-
-  Sidebar({Key? key, required this.onSystemMessageUpdated})
-      : _systemMessageController = TextEditingController(),
-        super(key: key);
-=======
   const Sidebar({Key? key}) : super(key: key);
->>>>>>> 91f88bf (Initial commit)
 
   @override
   Widget build(BuildContext context) {
     final systemMessageProvider = Provider.of<SystemMessageProvider>(context);
 
-    // Set the default value of _systemMessageController
-    _systemMessageController.text = systemMessageProvider.systemMessage;
+    // Set the default system message
+    final TextEditingController _systemMessageController =
+        TextEditingController(text: systemMessageProvider.systemMessage);
 
     return Drawer(
       child: Column(
@@ -30,7 +22,7 @@ class Sidebar extends StatelessWidget {
             leading: IconButton(
               icon: const Icon(Icons.close),
               onPressed: () {
-                _updateSystemMessage(context);
+                _updateSystemMessage(context, _systemMessageController);
                 Navigator.of(context).pop();
               },
             ),
@@ -38,12 +30,7 @@ class Sidebar extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Container(
-<<<<<<< HEAD
               height: MediaQuery.of(context).size.height * 0.60,
-=======
-              height: MediaQuery.of(context).size.height *
-                  0.60, // Setting height to 60% of screen height
->>>>>>> 91f88bf (Initial commit)
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.grey,
@@ -51,25 +38,16 @@ class Sidebar extends StatelessWidget {
                 ),
               ),
               child: TextFormField(
-<<<<<<< HEAD
                 controller: _systemMessageController,
                 maxLines: null,
                 expands: true,
                 onChanged: (text) {
-                  onSystemMessageUpdated(text);
+                  // Notify the parent widget when the system message changes
+                  systemMessageProvider.updateSystemMessage(text);
                 },
                 decoration: const InputDecoration(
                   labelText: 'System',
                   floatingLabelBehavior: FloatingLabelBehavior.always,
-=======
-                maxLines: null,
-                expands: true,
-                initialValue: 'You are a helpful assistant.',
-                decoration: const InputDecoration(
-                  labelText: 'System',
-                  floatingLabelBehavior: FloatingLabelBehavior
-                      .always, // Make label always float above
->>>>>>> 91f88bf (Initial commit)
                   contentPadding: EdgeInsets.all(8.0),
                   border: InputBorder.none,
                 ),
@@ -90,10 +68,11 @@ class Sidebar extends StatelessWidget {
     );
   }
 
-  void _updateSystemMessage(BuildContext context) {
+  void _updateSystemMessage(
+      BuildContext context, TextEditingController controller) {
     final systemMessageProvider =
         Provider.of<SystemMessageProvider>(context, listen: false);
-    final systemMessage = _systemMessageController.text;
+    final systemMessage = controller.text;
     systemMessageProvider.updateSystemMessage(systemMessage);
   }
 }

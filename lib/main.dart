@@ -15,20 +15,18 @@ final ThemeData _darkTheme = ThemeData(
   primarySwatch: Colors.blue,
 );
 
-<<<<<<< HEAD
-void main() => runApp(
-      ChangeNotifierProvider(
-        create: (context) =>
-            SystemMessageProvider(), // Create an instance of your provider
-        child: const MyApp(),
-      ),
-    );
-=======
-void main() => runApp(const MyApp());
->>>>>>> 91f88bf (Initial commit)
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) =>
+          SystemMessageProvider(), // Create an instance of your provider
+      child: const MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
