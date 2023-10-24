@@ -12,6 +12,7 @@ class ChatInput extends StatefulWidget {
 
 class _ChatInputState extends State<ChatInput> {
   final _controller = TextEditingController();
+  bool _didRequestFocus = false;
 
   void _submit() {
     print("Submitting text: ${_controller.text}"); // Add this line
@@ -23,6 +24,13 @@ class _ChatInputState extends State<ChatInput> {
 
   @override
   Widget build(BuildContext context) {
+    if (!_didRequestFocus) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        FocusScope.of(context).requestFocus(widget.focusNode);
+      });
+      _didRequestFocus = true;
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(

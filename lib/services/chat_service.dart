@@ -21,7 +21,6 @@ class ChatService {
 
     messages.add({"role": "system", "content": "You are a helpful assistant."});
     messages.add({"role": "system", "content": "You are dolumGuard."});
-    messages.add({"role": "system", "content": "You are a helpful assistant."});
     messages.add({
       "role": "system",
       "content":

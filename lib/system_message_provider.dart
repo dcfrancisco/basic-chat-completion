@@ -7,6 +7,5 @@ class SystemMessageProvider extends ChangeNotifier {
 
   void updateSystemMessage(String newMessage) {
     _systemMessage = newMessage;
-    notifyListeners();
   }
 }

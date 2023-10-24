@@ -19,17 +19,15 @@ class _ChatPageState extends State<ChatPage> {
   final _chatService = ChatService();
   final _scrollController = ScrollController();
   final FocusNode _inputFocusNode = FocusNode();
-  final FocusNode _sidebarFocusNode = FocusNode();
 
-  bool _isSending =
-      false; // Add this variable to track if a message is being sent
+// Add this variable to track if a message is being sent
 
   void _sendMessage(String content) async {
     final userMessage = Message(sender: 'user', content: content);
 
     setState(() {
       _messages.add(userMessage);
-      _isSending = true; // Set to true when a message is being sent
+// Set to true when a message is being sent
       Future.delayed(const Duration(milliseconds: 100), () {
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
       });
@@ -41,7 +39,7 @@ class _ChatPageState extends State<ChatPage> {
 
     setState(() {
       _messages.add(botMessage);
-      _isSending = false; // Set back to false when the message is sent
+// Set back to false when the message is sent
       Future.delayed(const Duration(milliseconds: 100), () {
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
       });
