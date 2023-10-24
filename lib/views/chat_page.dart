@@ -4,9 +4,11 @@ import 'package:mobile_ui/services/chat_service.dart';
 import 'package:mobile_ui/views/widgets/message_bubble.dart';
 import 'package:mobile_ui/views/widgets/chat_input.dart';
 import 'sidebar.dart';
+import 'package:provider/provider.dart';
+import 'package:mobile_ui/system_message_provider.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+  const ChatPage({Key? key}) : super(key: key);
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -16,29 +18,30 @@ class _ChatPageState extends State<ChatPage> {
   final List<Message> _messages = [];
   final _chatService = ChatService();
   final _scrollController = ScrollController();
-
   final FocusNode _inputFocusNode = FocusNode();
+  final FocusNode _sidebarFocusNode = FocusNode();
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  bool _isSending =
+      false; // Add this variable to track if a message is being sent
 
   void _sendMessage(String content) async {
     final userMessage = Message(sender: 'user', content: content);
-    _messages.add(userMessage);
 
     setState(() {
+      _messages.add(userMessage);
+      _isSending = true; // Set to true when a message is being sent
       Future.delayed(const Duration(milliseconds: 100), () {
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
       });
     });
 
     final botResponse = await _chatService.getBotResponse(_messages, content);
-    final botMessage = Message(sender: 'bot', content: botResponse);
-    _messages.add(botMessage);
+
+    final botMessage = Message(sender: 'assistant', content: botResponse);
 
     setState(() {
+      _messages.add(botMessage);
+      _isSending = false; // Set back to false when the message is sent
       Future.delayed(const Duration(milliseconds: 100), () {
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
       });
@@ -51,12 +54,18 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    final systemMessageProvider = Provider.of<SystemMessageProvider>(context);
+    final systemMessage = systemMessageProvider.systemMessage;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _inputFocusNode.requestFocus();
     });
     return Scaffold(
       appBar: AppBar(title: const Text('ChatBot')),
-      drawer: const Sidebar(),
+      drawer: Sidebar(
+        onSystemMessageUpdated: (systemMessage) {
+          systemMessageProvider.updateSystemMessage(systemMessage);
+        },
+      ),
       body: Container(
         color: Colors.blueGrey[900],
         child: Column(

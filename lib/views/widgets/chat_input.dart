@@ -14,6 +14,7 @@ class _ChatInputState extends State<ChatInput> {
   final _controller = TextEditingController();
 
   void _submit() {
+    print("Submitting text: ${_controller.text}"); // Add this line
     if (_controller.text.trim().isNotEmpty) {
       widget.onSend(_controller.text.trim());
       _controller.clear();
