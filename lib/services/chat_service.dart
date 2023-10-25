@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:mobile_ui/models/message.dart';
 import 'package:http/http.dart' as http;
-import 'package:mobile_ui/views/sidebar.dart';
 
 class ChatService {
   String systemMessage = 'You are a helpful very assistant.';
