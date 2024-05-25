@@ -3,6 +3,7 @@ import 'package:mobile_ui/views/login_page.dart';
 import 'package:mobile_ui/views/chat_page.dart';
 import 'package:provider/provider.dart';
 import 'system_message_provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // Light and Dark ThemeData
 final ThemeData _lightTheme = ThemeData(
@@ -15,13 +16,16 @@ final ThemeData _darkTheme = ThemeData(
   primarySwatch: Colors.blue,
 );
 
-void main() => runApp(
-      ChangeNotifierProvider(
-        create: (context) =>
-            SystemMessageProvider(), // Create an instance of your provider
-        child: const MyApp(),
-      ),
-    );
+void main() async {
+  await dotenv.load(fileName: ".env");
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) =>
+          SystemMessageProvider(), // Create an instance of your provider
+      child: const MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

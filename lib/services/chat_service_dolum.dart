@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'package:mobile_ui/models/message.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChatService {
-  String systemMessage = 'You are a helpful assistant.';
+  String systemMessage = 'You are a helpful very assistant.';
 
-  final String apiUrl = dotenv.env['OPENAI_API_URL'] ?? '';
-  final String apiKey = dotenv.env['OPENAI_API_KEY'] ?? '';
+  final apiUrl =
+      'https://hackathon2023-fraud-app.azurewebsites.net/chat_completion/';
 
   void updateSystemMessage(String message) {
     systemMessage = message;
@@ -37,36 +36,20 @@ class ChatService {
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: {
-        'Authorization': 'Bearer $apiKey',
+        'accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      body: jsonEncode({
-        "model": "gpt-3.5-turbo",
-        "messages": messages,
-        "temperature": 1,
-        "max_tokens": 123,
-        "top_p": 1,
-        "frequency_penalty": 0,
-        "presence_penalty": 0,
-      }),
+      body: jsonEncode({"messages": messages}),
     );
 
-    print("Sent to API: ${jsonEncode({
-          "model": "gpt-3.5-turbo",
-          "messages": messages,
-          "temperature": 1,
-          "max_tokens": 123,
-          "top_p": 1,
-          "frequency_penalty": 0,
-          "presence_penalty": 0,
-        })}");
+    print("Sent to API: ${jsonEncode({"messages": messages})}");
 
     if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
+      var jsonResponse = jsonDecode(response.body);
       print("API response status code: ${response.statusCode}");
 
-      // OpenAI API returns the content of the message inside 'choices' list
-      return jsonResponse['choices'][0]['message']['content'];
+      // Modify this part based on the format of the API response you are getting
+      return jsonResponse['response'];
     } else {
       print("API response error status code: ${response.statusCode}");
       return 'Error: Unable to fetch bot response.';

@@ -54,3 +54,6 @@ app.*.map.json
 .project
 .settings/
 .vscode/*
+
+# Flutter/Dart/Pub related
+.env

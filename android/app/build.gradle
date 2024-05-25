@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.mobile_ui"
+    namespace "ph.francisco.mobile_ui"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
