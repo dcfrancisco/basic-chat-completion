@@ -38,7 +38,10 @@ class MessageBubble extends StatelessWidget {
               ),
               child: Text(
                 message.content,
-                style: TextStyle(color: textColor),
+                style: TextStyle(
+                  color: textColor,
+                  fontFamily: 'Roboto',
+                ),
                 textAlign:
                     message.sender == 'user' ? TextAlign.right : TextAlign.left,
               ),

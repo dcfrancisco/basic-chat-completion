@@ -9,19 +9,20 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 final ThemeData _lightTheme = ThemeData(
   brightness: Brightness.light,
   primarySwatch: Colors.blue,
+  fontFamily: 'Roboto',
 );
 
 final ThemeData _darkTheme = ThemeData(
   brightness: Brightness.dark,
   primarySwatch: Colors.blue,
+  fontFamily: 'Roboto',
 );
 
 void main() async {
   await dotenv.load(fileName: ".env");
   runApp(
     ChangeNotifierProvider(
-      create: (context) =>
-          SystemMessageProvider(), // Create an instance of your provider
+      create: (context) => SystemMessageProvider(),
       child: const MyApp(),
     ),
   );

@@ -29,7 +29,6 @@ class ChatService {
     });
 
     for (var message in chatHistory) {
-      // Assign 'user' and 'assistant' roles appropriately
       String role = (message.sender == 'user') ? "user" : "assistant";
       messages.add({"role": role, "content": message.content});
     }
@@ -64,8 +63,7 @@ class ChatService {
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
       print("API response status code: ${response.statusCode}");
-
-      // OpenAI API returns the content of the message inside 'choices' list
+      print(jsonResponse);
       return jsonResponse['choices'][0]['message']['content'];
     } else {
       print("API response error status code: ${response.statusCode}");

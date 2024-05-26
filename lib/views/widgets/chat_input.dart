@@ -52,6 +52,8 @@ class _ChatInputState extends State<ChatInput> {
                   border: InputBorder.none,
                   hintText: 'Send a message...',
                 ),
+                style: const TextStyle(fontFamily: 'Roboto'),
+                textInputAction: TextInputAction.send,
               ),
             ),
             IconButton(
