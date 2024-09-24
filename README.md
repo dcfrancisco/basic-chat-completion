@@ -14,6 +14,14 @@ Follow these steps to set up and run the project.
 
 - Make sure you have Flutter installed. If not, you can install it by following the official Flutter installation guide: [Flutter Installation Guide](https://flutter.dev/docs/get-started/install).
 
+## Environment variables
+
+- Create a `.env` file in the root directory of the project.
+- Add the following environment variables to the `.env` file:
+  - OPENAI_API_KEY: Your OpenAI API key.
+  - OPENAI_API_URL = https://api.openai.com/v1/chat/completions
+
+
 ### Clone the Repository
 
 ```shell
