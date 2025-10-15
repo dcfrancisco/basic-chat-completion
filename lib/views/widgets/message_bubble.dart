@@ -8,50 +8,47 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
-    Color botColor = Colors.transparent;
-    Color textColor = Colors.white; // isDarkMode ? Colors.white : Colors.black;
+    final theme = Theme.of(context);
+    final isUser = message.sender == 'user';
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 12.0),
       child: Row(
-        mainAxisAlignment: message.sender == 'user'
+        mainAxisAlignment: isUser
             ? MainAxisAlignment.end
             : MainAxisAlignment.start,
         children: [
-          if (message.sender == 'bot') ...[
+          if (!isUser) ...[
             CircleAvatar(
-              backgroundColor: isDarkMode ? Colors.grey[600] : Colors.grey[300],
-              child: const Icon(Icons.android),
+              backgroundColor: theme.colorScheme.secondary.withOpacity(0.5),
+              child: const Icon(Icons.android, size: 20),
             ),
             const SizedBox(width: 10),
           ],
-          Expanded(
+          Flexible(
             child: Container(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
               decoration: BoxDecoration(
-                color: message.sender == 'user'
-                    ? Colors.grey[850]
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(10.0),
+                color: isUser
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.surface,
+                borderRadius: BorderRadius.circular(12.0),
               ),
               child: Text(
                 message.content,
                 style: TextStyle(
-                  color: textColor,
-                  fontFamily: 'Roboto',
+                  color: isUser
+                      ? theme.colorScheme.onPrimary
+                      : theme.colorScheme.onSurface,
                 ),
-                textAlign:
-                    message.sender == 'user' ? TextAlign.right : TextAlign.left,
               ),
             ),
           ),
-          if (message.sender == 'user') ...[
+          if (isUser) ...[
             const SizedBox(width: 10),
             CircleAvatar(
-              backgroundColor: isDarkMode ? Colors.blueGrey : Colors.blue[200],
-              child: const Icon(Icons.person),
+              backgroundColor: theme.colorScheme.primary.withOpacity(0.8),
+              child: const Icon(Icons.person, size: 20),
             ),
           ],
         ],

@@ -7,39 +7,36 @@ class ChatInput extends StatefulWidget {
   const ChatInput({super.key, required this.onSend, required this.focusNode});
 
   @override
-  _ChatInputState createState() => _ChatInputState();
+  State<ChatInput> createState() => _ChatInputState();
 }
 
 class _ChatInputState extends State<ChatInput> {
   final _controller = TextEditingController();
-  bool _didRequestFocus = false;
 
   void _submit() {
-    print("Submitting text: ${_controller.text}"); // Add this line
     if (_controller.text.trim().isNotEmpty) {
       widget.onSend(_controller.text.trim());
       _controller.clear();
+      widget.focusNode.requestFocus();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!_didRequestFocus) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        FocusScope.of(context).requestFocus(widget.focusNode);
-      });
-      _didRequestFocus = true;
-    }
-
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
         decoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.light
-              ? Colors.grey[200] // Light theme
-              : Colors.grey[800], // Dark theme
-          borderRadius: BorderRadius.circular(10.0),
+          color: theme.colorScheme.surface,
+          borderRadius: BorderRadius.circular(24.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Row(
           children: [
@@ -51,19 +48,15 @@ class _ChatInputState extends State<ChatInput> {
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Send a message...',
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20),
                 ),
-                style: const TextStyle(fontFamily: 'Roboto'),
                 textInputAction: TextInputAction.send,
               ),
             ),
             IconButton(
               icon: const Icon(Icons.send),
               onPressed: _submit,
-              color: Theme.of(context).brightness == Brightness.light
-                  ? Colors.blue // Light theme
-                  : Colors.blueAccent, // Dark theme
-              hoverColor: Colors.transparent,
-              splashRadius: 24.0,
+              color: theme.colorScheme.primary,
             ),
           ],
         ),
